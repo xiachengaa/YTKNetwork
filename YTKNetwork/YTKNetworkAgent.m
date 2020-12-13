@@ -24,6 +24,7 @@
 #import "YTKNetworkAgent.h"
 #import "YTKNetworkConfig.h"
 #import "YTKNetworkPrivate.h"
+#import "UVLapiAuthInfoBean.h"
 #import <pthread/pthread.h>
 
 #if __has_include(<AFNetworking/AFHTTPSessionManager.h>)
@@ -43,7 +44,8 @@
     AFJSONResponseSerializer *_jsonResponseSerializer;
     AFXMLParserResponseSerializer *_xmlParserResponseSerialzier;
     NSMutableDictionary<NSNumber *, YTKBaseRequest *> *_requestsRecord;
-
+    NSMutableDictionary<NSString *, UVLapiAuthInfoBean *> *_autoInfoRecord;
+    
     dispatch_queue_t _processingQueue;
     pthread_mutex_t _lock;
     NSIndexSet *_allStatusCodes;
@@ -63,7 +65,9 @@
     if (self) {
         _config = [YTKNetworkConfig sharedConfig];
         _manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:_config.sessionConfiguration];
+        [self configChallengeHandle];
         _requestsRecord = [NSMutableDictionary dictionary];
+        _autoInfoRecord = [NSMutableDictionary dictionary];
         _processingQueue = dispatch_queue_create("com.yuantiku.networkagent.processing", DISPATCH_QUEUE_CONCURRENT);
         _allStatusCodes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(100, 500)];
         pthread_mutex_init(&_lock, NULL);
@@ -76,6 +80,56 @@
         [_manager setTaskDidFinishCollectingMetricsBlock:_config.collectingMetricsBlock];
     }
     return self;
+}
+
+- (void)configChallengeHandle
+{
+    @weakify(self);
+    @weakify(_manager);
+    [_manager setTaskDidReceiveAuthenticationChallengeBlock:^ NSURLSessionAuthChallengeDisposition(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task, NSURLAuthenticationChallenge * _Nonnull challenge, NSURLCredential *__autoreleasing  _Nullable * _Nullable credential)
+
+    {
+        @strongify(self);
+        NSMutableDictionary *recordRequestDic = [agent valueForKey:UVNetworkUtilYTKNetworkAgentRequestsRecordKey];
+        NSCParameterAssert(recordRequestDic);
+        YTKBaseRequest *request = (YTKBaseRequest *)[recordRequestDic objectForKey:@(task.taskIdentifier)];
+        if (challenge.previousFailureCount > 0 || !request) {
+            return NSURLSessionAuthChallengeCancelAuthenticationChallenge;
+        }
+        //鉴权信息复用(Digest)：把鉴权信息带回到request中，上层请求完成后可从中取出，
+        //后续请求可直接复用里面的鉴权信息，由此 Digest 鉴权可少一次交互
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)challenge.failureResponse;
+        NSDictionary *httpResponseHeader = httpResponse.allHeaderFields;
+        UVLapiAuthInfoBean *authInfo = [UVLapiAuthInfoBean authInfoWithResoponseAllHeaderFields:httpResponseHeader];
+        if (authInfo) {
+            [self addAuthInfoToRecord:authInfo];
+        }
+        //Digest鉴权及Basic鉴权处理
+        NSString *authMethod = challenge.protectionSpace.authenticationMethod;
+        if ([authMethod isEqualToString:NSURLAuthenticationMethodHTTPDigest] ||
+            [authMethod isEqualToString:NSURLAuthenticationMethodHTTPBasic]) {
+            NSArray<NSString *> *authorizationHeaderFieldArray = [request requestAuthorizationHeaderFieldArray];
+            if (authorizationHeaderFieldArray != nil) {
+                NSURLCredential *myCredential = [[NSURLCredential alloc]initWithUser:authorizationHeaderFieldArray.firstObject password:authorizationHeaderFieldArray.lastObject persistence:NSURLCredentialPersistencePermanent];
+                *credential = myCredential;
+                return NSURLSessionAuthChallengeUseCredential;
+            }
+        }
+        //SSL/TLS certrifcate 鉴权
+        NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+        @strongify(_manager);
+        if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+            if ([_manager.securityPolicy evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:challenge.protectionSpace.host]) {
+                disposition = NSURLSessionAuthChallengeUseCredential;
+                *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+            } else {
+                disposition = NSURLSessionAuthChallengeCancelAuthenticationChallenge;
+            }
+        } else {
+            disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+        }
+        return disposition;
+    }];
 }
 
 - (AFJSONResponseSerializer *)jsonResponseSerializer {
@@ -135,6 +189,26 @@
     return [NSURL URLWithString:detailUrl relativeToURL:url].absoluteString;
 }
 
+- (NSString *)finialHostForRequest:(YTKBaseRequest *)request
+{
+    NSString *baseUrl;
+    if ([request useCDN]) {
+        if ([request cdnUrl].length > 0) {
+            baseUrl = [request cdnUrl];
+        } else {
+            baseUrl = [_config cdnUrl];
+        }
+    } else {
+        if ([request baseUrl].length > 0) {
+            baseUrl = [request baseUrl];
+        } else {
+            baseUrl = [_config baseUrl];
+        }
+    }
+    return baseUrl;
+}
+
+
 - (AFHTTPRequestSerializer *)requestSerializerForRequest:(YTKBaseRequest *)request {
     AFHTTPRequestSerializer *requestSerializer = nil;
     if (request.requestSerializerType == YTKRequestSerializerTypeHTTP) {
@@ -149,8 +223,13 @@
     // If api needs server username and password
     NSArray<NSString *> *authorizationHeaderFieldArray = [request requestAuthorizationHeaderFieldArray];
     if (authorizationHeaderFieldArray != nil) {
-        [requestSerializer setAuthorizationHeaderFieldWithUsername:authorizationHeaderFieldArray.firstObject
-                                                          password:authorizationHeaderFieldArray.lastObject];
+        UVLapiAuthInfoBean *authInfo = _autoInfoRecord[[self finialHostForRequest:request]];
+        if (authInfo && authInfo.authType = UVLapiRequestAuthTypeDigest) {
+            [self setValue:[authInfo digestAuthenticationForRequest:request] forHTTPHeaderField:@"Authorization"];
+        } else {
+            [requestSerializer setAuthorizationHeaderFieldWithUsername:authorizationHeaderFieldArray.firstObject
+                                                              password:authorizationHeaderFieldArray.lastObject];
+        }
     }
 
     // If api needs to add custom value to HTTPHeaderField
@@ -453,6 +532,13 @@
         }
         [request toggleAccessoriesDidStopCallBack];
     });
+}
+
+- (void)addAuthInfoToRecord:(UVLapiAuthInfoBean *)autiInfo
+{
+    Lock();
+    [_autoInfoRecord[[self finialHostForRequest:request]] = authInfo;
+    Unlock();
 }
 
 - (void)addRequestToRecord:(YTKBaseRequest *)request {

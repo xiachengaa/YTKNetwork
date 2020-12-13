@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C185A782585A7E600B21F7C /* UVLapiAuthInfoBean.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C185A762585A7E600B21F7C /* UVLapiAuthInfoBean.h */; };
+		1C185A792585A7E600B21F7C /* UVLapiAuthInfoBean.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C185A762585A7E600B21F7C /* UVLapiAuthInfoBean.h */; };
+		1C185A7A2585A7E600B21F7C /* UVLapiAuthInfoBean.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C185A762585A7E600B21F7C /* UVLapiAuthInfoBean.h */; };
+		1C185A7B2585A7E600B21F7C /* UVLapiAuthInfoBean.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C185A762585A7E600B21F7C /* UVLapiAuthInfoBean.h */; };
+		1C185A7C2585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C185A772585A7E600B21F7C /* UVLapiAuthInfoBean.m */; };
+		1C185A7D2585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C185A772585A7E600B21F7C /* UVLapiAuthInfoBean.m */; };
+		1C185A7E2585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C185A772585A7E600B21F7C /* UVLapiAuthInfoBean.m */; };
+		1C185A7F2585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C185A772585A7E600B21F7C /* UVLapiAuthInfoBean.m */; };
+		1C185A802585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C185A772585A7E600B21F7C /* UVLapiAuthInfoBean.m */; };
+		1C185A812585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C185A772585A7E600B21F7C /* UVLapiAuthInfoBean.m */; };
+		1C185A822585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C185A772585A7E600B21F7C /* UVLapiAuthInfoBean.m */; };
 		2D244E0D1D4ED6470031202D /* YTKNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D244E0C1D4ED6470031202D /* YTKNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D244E141D4ED6470031202D /* YTKNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D244E091D4ED6470031202D /* YTKNetwork.framework */; };
 		2D244E361D4ED7910031202D /* YTKBaseRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D244E241D4ED7910031202D /* YTKBaseRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -219,6 +230,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1C185A762585A7E600B21F7C /* UVLapiAuthInfoBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVLapiAuthInfoBean.h; sourceTree = "<group>"; };
+		1C185A772585A7E600B21F7C /* UVLapiAuthInfoBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVLapiAuthInfoBean.m; sourceTree = "<group>"; };
 		2D244E091D4ED6470031202D /* YTKNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YTKNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D244E0C1D4ED6470031202D /* YTKNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YTKNetwork.h; sourceTree = "<group>"; };
 		2D244E0E1D4ED6470031202D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Framework/Info.plist; sourceTree = "<group>"; };
@@ -398,6 +411,8 @@
 		2D244E231D4ED7830031202D /* YTKNetwork */ = {
 			isa = PBXGroup;
 			children = (
+				1C185A762585A7E600B21F7C /* UVLapiAuthInfoBean.h */,
+				1C185A772585A7E600B21F7C /* UVLapiAuthInfoBean.m */,
 				2D244E241D4ED7910031202D /* YTKBaseRequest.h */,
 				2D244E251D4ED7910031202D /* YTKBaseRequest.m */,
 				2D244E261D4ED7910031202D /* YTKBatchRequest.h */,
@@ -493,6 +508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D244E421D4ED7910031202D /* YTKNetworkConfig.h in Headers */,
+				1C185A782585A7E600B21F7C /* UVLapiAuthInfoBean.h in Headers */,
 				2D244E361D4ED7910031202D /* YTKBaseRequest.h in Headers */,
 				2D244E381D4ED7910031202D /* YTKBatchRequest.h in Headers */,
 				2D244E3C1D4ED7910031202D /* YTKChainRequest.h in Headers */,
@@ -510,6 +526,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D58ADC01D59912700FA6347 /* YTKBaseRequest.h in Headers */,
+				1C185A792585A7E600B21F7C /* UVLapiAuthInfoBean.h in Headers */,
 				2D58ADC11D59912700FA6347 /* YTKBatchRequest.h in Headers */,
 				2D58ADC31D59912700FA6347 /* YTKChainRequest.h in Headers */,
 				2D58ADC61D59912700FA6347 /* YTKNetworkConfig.h in Headers */,
@@ -527,6 +544,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D58ADF51D59986500FA6347 /* YTKBaseRequest.h in Headers */,
+				1C185A7B2585A7E600B21F7C /* UVLapiAuthInfoBean.h in Headers */,
 				2D58ADF61D59986500FA6347 /* YTKBatchRequest.h in Headers */,
 				2D58ADF71D59986500FA6347 /* YTKChainRequest.h in Headers */,
 				2D58ADF81D59986500FA6347 /* YTKNetworkConfig.h in Headers */,
@@ -544,6 +562,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DC79A881D599C1C00197527 /* YTKBaseRequest.h in Headers */,
+				1C185A7A2585A7E600B21F7C /* UVLapiAuthInfoBean.h in Headers */,
 				2DC79A891D599C1C00197527 /* YTKBatchRequest.h in Headers */,
 				2DC79A8B1D599C1C00197527 /* YTKChainRequest.h in Headers */,
 				2DC79A8E1D599C1C00197527 /* YTKNetworkConfig.h in Headers */,
@@ -731,6 +750,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 2D244DFF1D4ED6460031202D;
@@ -810,6 +830,7 @@
 				2D244E471D4ED7920031202D /* YTKRequest.m in Sources */,
 				2D244E431D4ED7910031202D /* YTKNetworkConfig.m in Sources */,
 				2D244E411D4ED7910031202D /* YTKNetworkAgent.m in Sources */,
+				1C185A7C2585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */,
 				2D244E451D4ED7910031202D /* YTKNetworkPrivate.m in Sources */,
 				2D244E371D4ED7910031202D /* YTKBaseRequest.m in Sources */,
 				2D244E391D4ED7910031202D /* YTKBatchRequest.m in Sources */,
@@ -835,6 +856,7 @@
 				2DDCF9E61DA7B72B00F5793B /* YTKBasicUrlFilter.m in Sources */,
 				2DDCF9E31DA7B72B00F5793B /* YTKBasicCacheDirFilter.m in Sources */,
 				2DDCF9C41DA7B71600F5793B /* YTKCacheTests.m in Sources */,
+				1C185A802585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */,
 				2DDCFA071DA7B73B00F5793B /* YTKDownloadRequest.m in Sources */,
 				2DDCF9D31DA7B71600F5793B /* YTKPerformanceTests.m in Sources */,
 				2DDCF9FE1DA7B73B00F5793B /* YTKBasicHTTPRequest.m in Sources */,
@@ -853,6 +875,7 @@
 				2D58ADB81D59910500FA6347 /* YTKBatchRequest.m in Sources */,
 				2D58ADB91D59910500FA6347 /* YTKBatchRequestAgent.m in Sources */,
 				2D58ADBA1D59910500FA6347 /* YTKChainRequest.m in Sources */,
+				1C185A7D2585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */,
 				2D58ADBB1D59910500FA6347 /* YTKChainRequestAgent.m in Sources */,
 				2D58ADBC1D59910500FA6347 /* YTKNetworkAgent.m in Sources */,
 				2D58ADBD1D59910500FA6347 /* YTKNetworkConfig.m in Sources */,
@@ -869,6 +892,7 @@
 				2D58ADEA1D5997D300FA6347 /* YTKBatchRequest.m in Sources */,
 				2D58ADEB1D5997D300FA6347 /* YTKBatchRequestAgent.m in Sources */,
 				2D58ADEC1D5997D300FA6347 /* YTKChainRequest.m in Sources */,
+				1C185A7F2585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */,
 				2D58ADED1D5997D300FA6347 /* YTKChainRequestAgent.m in Sources */,
 				2D58ADEE1D5997D300FA6347 /* YTKNetworkAgent.m in Sources */,
 				2D58ADEF1D5997D300FA6347 /* YTKNetworkConfig.m in Sources */,
@@ -894,6 +918,7 @@
 				2DDCF9E81DA7B72B00F5793B /* YTKBasicUrlFilter.m in Sources */,
 				2DDCF9E51DA7B72B00F5793B /* YTKBasicCacheDirFilter.m in Sources */,
 				2DDCF9C61DA7B71600F5793B /* YTKCacheTests.m in Sources */,
+				1C185A822585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */,
 				2DDCFA091DA7B73B00F5793B /* YTKDownloadRequest.m in Sources */,
 				2DDCF9D51DA7B71600F5793B /* YTKPerformanceTests.m in Sources */,
 				2DDCFA001DA7B73B00F5793B /* YTKBasicHTTPRequest.m in Sources */,
@@ -912,6 +937,7 @@
 				2DC79A7D1D599B6B00197527 /* YTKBatchRequest.m in Sources */,
 				2DC79A7E1D599B6B00197527 /* YTKBatchRequestAgent.m in Sources */,
 				2DC79A7F1D599B6B00197527 /* YTKChainRequest.m in Sources */,
+				1C185A7E2585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */,
 				2DC79A801D599B6B00197527 /* YTKChainRequestAgent.m in Sources */,
 				2DC79A811D599B6B00197527 /* YTKNetworkAgent.m in Sources */,
 				2DC79A821D599B6B00197527 /* YTKNetworkConfig.m in Sources */,
@@ -937,6 +963,7 @@
 				2DDCF9E71DA7B72B00F5793B /* YTKBasicUrlFilter.m in Sources */,
 				2DDCF9E41DA7B72B00F5793B /* YTKBasicCacheDirFilter.m in Sources */,
 				2DDCF9C51DA7B71600F5793B /* YTKCacheTests.m in Sources */,
+				1C185A812585A7E600B21F7C /* UVLapiAuthInfoBean.m in Sources */,
 				2DDCFA081DA7B73B00F5793B /* YTKDownloadRequest.m in Sources */,
 				2DDCF9D41DA7B71600F5793B /* YTKPerformanceTests.m in Sources */,
 				2DDCF9FF1DA7B73B00F5793B /* YTKBasicHTTPRequest.m in Sources */,
